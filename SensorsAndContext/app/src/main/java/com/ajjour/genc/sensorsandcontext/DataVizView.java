@@ -68,8 +68,8 @@ public class DataVizView extends View {
         canvas = new Canvas(bitmap);
         startTimeMillis = System.currentTimeMillis();
 
-        dx = this.getHeight() / 2;
-        dy = this.getWidth() / 2;
+        dx = this.getWidth() / 2;
+        dy = this.getHeight() / 2;
         T = 0;
     }
 
@@ -98,15 +98,21 @@ public class DataVizView extends View {
 
         long t = (System.currentTimeMillis() - startTimeMillis) / 10;
 
+        float newMag = 0;
+        float oldMag = this.values[3];
+
         for (int i = 0; i < 3; i++){
             newVal = newValues[i];
-            newVal = (newVal * 10) + dx;
+            newMag += Math.pow(newVal, 2);
+            newVal = newVal * 10 + dy;
             oldVal = this.values[i];
             paths[i].quadTo(T, oldVal, (t + T) / 2, (newVal + oldVal) / 2);
             this.values[i] = newVal;
         }
+        newMag = (float) Math.sqrt(newMag) * 10 + dy;
+        paths[3].quadTo(T, oldMag, (t + T) / 2, (newMag + oldMag) / 2);
+        this.values[3] = newMag;
         T = t;
-
         invalidate();
     }
 }
