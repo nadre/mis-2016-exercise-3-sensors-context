@@ -7,6 +7,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 /**
@@ -20,7 +21,7 @@ public class DataVizActivity extends AppCompatActivity implements SensorEventLis
     private DataVizView dataVizView;
     private SensorManager sensorManager;
     private Sensor accelerometer;
-
+    private double samplingRate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,25 @@ public class DataVizActivity extends AppCompatActivity implements SensorEventLis
         if (accelerometer == null){
             Toast.makeText(this, "Whoopsie, couldn't find Accelerometer.", Toast.LENGTH_SHORT).show();
         }
+
+        SeekBar seekBar = (SeekBar)findViewById(R.id.seekbar);
+        seekBar.setMax(100);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                samplingRate = ((double)progress)/100;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                sensorManager.unregisterListener(DataVizActivity.this);
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                sensorManager.registerListener(DataVizActivity.this, accelerometer, (int)(SensorManager.SENSOR_DELAY_FASTEST*samplingRate));
+            }
+        });
     }
 
     public void clearCanvas(){
@@ -52,6 +72,7 @@ public class DataVizActivity extends AppCompatActivity implements SensorEventLis
     protected void onResume() {
         super.onResume();
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+
     }
 
     @Override
