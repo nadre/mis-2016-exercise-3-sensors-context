@@ -6,8 +6,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.hardware.SensorManager;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ScrollView;
+
+import java.util.List;
 
 /**
  * Created by neffle on 15.05.16.
@@ -25,6 +29,12 @@ public class DataVizView extends View {
 
     Path[] paths;
     Paint[] paints;
+
+    boolean increasing = true;
+    int windowSize = 100;
+
+    int index = 0;
+    float[] fft_values = new float[windowSize];
 
     float[] values;
     float T;
@@ -81,7 +91,6 @@ public class DataVizView extends View {
             canvas.drawPath(paths[i], paints[i]);
         }
 
-
     }
 
     public void clearCanvas() {
@@ -97,6 +106,8 @@ public class DataVizView extends View {
         float oldVal;
 
         long t = (System.currentTimeMillis() - startTimeMillis) / 10;
+        float dt = T-t;
+        dt *= 12;
 
         float newMag = 0;
         float oldMag = this.values[3];
@@ -106,13 +117,41 @@ public class DataVizView extends View {
             newMag += Math.pow(newVal, 2);
             newVal = newVal * 10 + dy;
             oldVal = this.values[i];
-            paths[i].quadTo(T, oldVal, (t + T) / 2, (newVal + oldVal) / 2);
+            paths[i].lineTo(t, newVal);
+            if (t > 20){
+                paths[i].offset(dt, 0);
+            }
             this.values[i] = newVal;
         }
-        newMag = (float) Math.sqrt(newMag) * 10 + dy;
-        paths[3].quadTo(T, oldMag, (t + T) / 2, (newMag + oldMag) / 2);
+
+        newMag = (float) Math.sqrt(newMag);
+
+        addNewMagValue(newMag);
+
+        newMag = newMag * 10 + dy;
+//        paths[3].quadTo(T, oldMag, (t + T) / 2, (newMag + oldMag) / 2);
+        paths[3].lineTo(t, newMag);
+        if (t > 20){
+            paths[3].offset(dt ,0);
+        }
         this.values[3] = newMag;
         T = t;
         invalidate();
+    }
+
+    public void addNewMagValue(float magVal) {
+        if (index == windowSize - 1){
+            increasing = false;
+        }
+        if (increasing) {
+            fft_values[index] = magVal;
+            index++;
+        }
+        else {
+            for (int i = windowSize - 1; i == 0; i--){
+                fft_values[i-1] = fft_values[i];
+            }
+            fft_values[windowSize - 1] = magVal;
+        }
     }
 }
