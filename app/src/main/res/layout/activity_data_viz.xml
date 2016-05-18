@@ -10,19 +10,16 @@
     tools:context="com.ajjour.genc.sensorsandcontext.DataVizActivity"
     android:orientation="vertical">
 
-    <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="1"-->
-        <!--android:text="Sampling Rate"-->
-        <!--/>-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sampling Rate"
+        />
 
     <SeekBar
         android:id="@+id/sampling_rate_seekbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10px"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         />
 
     <com.ajjour.genc.sensorsandcontext.DataVizView
@@ -32,27 +29,24 @@
         android:layout_weight="8"
         />
 
-    <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="1"-->
-        <!--android:text="Window Size"-->
-        <!--/>-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="FFT Window Size"
+        />
 
-    <!--<SeekBar-->
-        <!--android:id="@+id/window_size_seekbar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_margin="10px"-->
-        <!--android:layout_weight="1"-->
-        <!--/>-->
+    <SeekBar
+        android:id="@+id/window_size_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 
-    <!--<com.ajjour.genc.sensorsandcontext.DataVizView-->
-        <!--android:id="@+id/data_fft_canvas"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="8"-->
-        <!--/>-->
+    <com.ajjour.genc.sensorsandcontext.DataVizView
+        android:id="@+id/data_fft_canvas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="8"
+        />
 
 
 </LinearLayout>

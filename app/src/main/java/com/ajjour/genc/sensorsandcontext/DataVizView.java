@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ScrollView;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -31,15 +32,17 @@ public class DataVizView extends View {
     Paint[] paints;
 
     boolean increasing = true;
-    int windowSize = 100;
+
+    //should be an power of 2
+    int windowSize = 1024;
 
     int index = 0;
-    float[] fft_values = new float[windowSize];
+    double[] fft_values = new double[windowSize];
 
-    float[] values;
-    float T;
-    float dx;
-    float dy;
+    double[] values;
+    double T;
+    double dx;
+    double dy;
     long startTimeMillis;
 
     public DataVizView(Context context, AttributeSet attrs) {
@@ -68,7 +71,7 @@ public class DataVizView extends View {
         paints[2].setColor(Color.BLUE);
         paints[3].setColor(Color.BLACK);
 
-        values = new float[4];
+        values = new double[4];
     }
 
     @Override
@@ -102,23 +105,23 @@ public class DataVizView extends View {
 
     public void updateView(float newValues[]) {
 
-        float newVal;
-        float oldVal;
+        double newVal;
+        double oldVal;
 
         long t = (System.currentTimeMillis() - startTimeMillis);
-        float dt = T-t;
+        double dt = T-t;
 
-        float newMag = 0;
-        float oldMag = this.values[3];
+        double newMag = 0;
+        double oldMag = this.values[3];
 
         for (int i = 0; i < 3; i++){
             newVal = newValues[i];
             newMag += Math.pow(newVal, 2);
             newVal = newVal * 10 + dy;
             oldVal = this.values[i];
-            paths[i].lineTo(t, newVal);
+            paths[i].lineTo(t, (float) newVal);
             if (t > 20){
-                paths[i].offset(dt, 0);
+                paths[i].offset( (float) dt, 0);
             }
             this.values[i] = newVal;
         }
@@ -129,9 +132,9 @@ public class DataVizView extends View {
 
         newMag = newMag * 10 + dy;
 //        paths[3].quadTo(T, oldMag, (t + T) / 2, (newMag + oldMag) / 2);
-        paths[3].lineTo(t, newMag);
+        paths[3].lineTo(t, (float) newMag);
         if (t > 20){
-            paths[3].offset(dt ,0);
+            paths[3].offset((float) dt ,0);
             startTimeMillis += dt;
         }
         this.values[3] = newMag;
@@ -139,7 +142,7 @@ public class DataVizView extends View {
         invalidate();
     }
 
-    public void addNewMagValue(float magVal) {
+    public void addNewMagValue(double magVal) {
         if (index == windowSize - 1){
             increasing = false;
         }
@@ -153,5 +156,12 @@ public class DataVizView extends View {
             }
             fft_values[windowSize - 1] = magVal;
         }
+
+        double[] fft_out_x = Arrays.copyOf(fft_values, fft_values.length);
+        double[] fft_out_y = new double[fft_values.length];
+
+        FFT fft = new FFT(windowSize);
+        fft.fft(fft_out_x, fft_out_y);
+
     }
 }
