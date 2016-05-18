@@ -38,7 +38,7 @@ public class DataVizActivity extends AppCompatActivity implements SensorEventLis
             Toast.makeText(this, "Whoopsie, couldn't find Accelerometer.", Toast.LENGTH_SHORT).show();
         }
 
-        SeekBar seekBar = (SeekBar)findViewById(R.id.seekbar);
+        SeekBar seekBar = (SeekBar)findViewById(R.id.sampling_rate_seekbar);
         seekBar.setMax(100);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -72,7 +72,6 @@ public class DataVizActivity extends AppCompatActivity implements SensorEventLis
     protected void onResume() {
         super.onResume();
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-
     }
 
     @Override

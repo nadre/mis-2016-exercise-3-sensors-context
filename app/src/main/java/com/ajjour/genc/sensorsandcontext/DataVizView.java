@@ -105,9 +105,8 @@ public class DataVizView extends View {
         float newVal;
         float oldVal;
 
-        long t = (System.currentTimeMillis() - startTimeMillis) / 10;
+        long t = (System.currentTimeMillis() - startTimeMillis);
         float dt = T-t;
-        dt *= 12;
 
         float newMag = 0;
         float oldMag = this.values[3];
@@ -133,6 +132,7 @@ public class DataVizView extends View {
         paths[3].lineTo(t, newMag);
         if (t > 20){
             paths[3].offset(dt ,0);
+            startTimeMillis += dt;
         }
         this.values[3] = newMag;
         T = t;
