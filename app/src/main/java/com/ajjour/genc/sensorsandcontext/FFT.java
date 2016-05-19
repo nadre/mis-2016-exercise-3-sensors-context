@@ -122,4 +122,9 @@ public class FFT {
           }
       }
   }
+
+  public double abs(double a, double b) {
+    return Math.sqrt(Math.pow(a,2)+Math.pow(b,2));
+  }
+
 }
