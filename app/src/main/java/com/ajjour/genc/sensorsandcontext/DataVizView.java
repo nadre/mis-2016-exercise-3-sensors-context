@@ -31,10 +31,12 @@ public class DataVizView extends View {
     boolean increasing = true;
 
     //should be an power of 2
-    int windowSize = 1024;
+    int initWindowSize = 1024;
+    int maxWindowSize = 2048;
+
+    double[] fft_values = new double[maxWindowSize];
 
     int index = 0;
-    double[] fft_values = new double[windowSize];
 
     double[] values;
     double T;
@@ -48,7 +50,7 @@ public class DataVizView extends View {
         this.context = context;
         this.attrs = attrs;
 
-        int PATHS = 5;
+        int PATHS = 4;
 
         paths = new Path[PATHS];
         paints = new Paint[PATHS];
@@ -69,7 +71,6 @@ public class DataVizView extends View {
         paints[1].setColor(Color.GREEN);
         paints[2].setColor(Color.BLUE);
         paints[3].setColor(Color.BLACK);
-        paints[4].setColor(Color.LTGRAY);
 
         values = new double[PATHS];
     }
@@ -91,7 +92,6 @@ public class DataVizView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         for (int i = 0; i < paths.length; i++){
             canvas.drawPath(paths[i], paints[i]);
         }
@@ -105,7 +105,7 @@ public class DataVizView extends View {
         invalidate();
     }
 
-    public void updateView(float newValues[]) {
+    public double updateViewAndReturnMagnitude(float newValues[]) {
 
         double newVal;
         double oldVal;
@@ -130,12 +130,8 @@ public class DataVizView extends View {
 
         newMag = (float) Math.sqrt(newMag);
 
-        addNewMagValue(newMag);
-
-        newMag = newMag * 10 + dy;
-
 //        paths[3].quadTo(T, oldMag, (t + T) / 2, (newMag + oldMag) / 2);
-        paths[3].lineTo(t, (float) newMag);
+        paths[3].lineTo(t, (float) newMag*10 + (float) dy );
 
 //        if (t > 20){
 //            paths[3].offset((float) dt ,0);
@@ -145,33 +141,8 @@ public class DataVizView extends View {
         this.values[3] = newMag;
         T = t;
         invalidate();
+
+        return newMag;
     }
 
-    public void addNewMagValue(double magVal) {
-        if (index == windowSize - 1){
-            increasing = false;
-        }
-        if (increasing) {
-            fft_values[index] = magVal;
-            index++;
-        }
-        else {
-            for (int i = windowSize - 1; i == 0; i--){
-                fft_values[i-1] = fft_values[i];
-            }
-            fft_values[windowSize - 1] = magVal;
-        }
-
-        double[] fft_out_x = Arrays.copyOf(fft_values, fft_values.length);
-        double[] fft_out_y = new double[fft_values.length];
-
-        FFT fft = new FFT(windowSize);
-        fft.fft(fft_out_x, fft_out_y);
-
-        paths[4].reset();
-        for(int i = 0; i < fft_out_x.length; i++){
-            double abs = fft.abs(fft_out_x[i], fft_out_y[i]);
-            paths[4].lineTo(i, (float) abs);
-        }
-    }
 }

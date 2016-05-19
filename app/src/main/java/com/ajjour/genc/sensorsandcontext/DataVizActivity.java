@@ -19,6 +19,7 @@ import android.widget.Toast;
 public class DataVizActivity extends AppCompatActivity implements SensorEventListener {
 
     private DataVizView dataVizView;
+    private DataFFTView dataFFTView;
     private SensorManager sensorManager;
     private Sensor accelerometer;
     private double samplingRate;
@@ -28,6 +29,7 @@ public class DataVizActivity extends AppCompatActivity implements SensorEventLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_viz);
 
+        dataFFTView = (DataFFTView) findViewById(R.id.data_fft_canvas);
         dataVizView = (DataVizView) findViewById(R.id.data_viz_canvas);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -38,9 +40,9 @@ public class DataVizActivity extends AppCompatActivity implements SensorEventLis
             Toast.makeText(this, "Whoopsie, couldn't find Accelerometer.", Toast.LENGTH_SHORT).show();
         }
 
-        SeekBar seekBar = (SeekBar)findViewById(R.id.sampling_rate_seekbar);
-        seekBar.setMax(100);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        SeekBar samplingRateBar = (SeekBar)findViewById(R.id.sampling_rate_seekbar);
+        samplingRateBar.setMax(100);
+        samplingRateBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 samplingRate = ((double)progress)/100;
@@ -56,6 +58,24 @@ public class DataVizActivity extends AppCompatActivity implements SensorEventLis
                 sensorManager.registerListener(DataVizActivity.this, accelerometer, (int)(SensorManager.SENSOR_DELAY_FASTEST*samplingRate));
             }
         });
+
+        SeekBar windowSizeBar = (SeekBar)findViewById(R.id.window_size_seekbar);
+        windowSizeBar.setMax(11);
+        windowSizeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                dataFFTView.changeWindowSize(progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+
+        });
     }
 
     public void clearCanvas(){
@@ -65,7 +85,8 @@ public class DataVizActivity extends AppCompatActivity implements SensorEventLis
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         float[] values = sensorEvent.values;
-        dataVizView.updateView(values);
+        double magnitude = dataVizView.updateViewAndReturnMagnitude(values);
+        dataFFTView.addNewMagValue(magnitude);
     }
 
     @Override

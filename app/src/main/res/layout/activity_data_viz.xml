@@ -41,4 +41,11 @@
         android:layout_height="wrap_content"
         />
 
+    <com.ajjour.genc.sensorsandcontext.DataFFTView
+        android:id="@+id/data_fft_canvas"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        />
+
 </LinearLayout>
