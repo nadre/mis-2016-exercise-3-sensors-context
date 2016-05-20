@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Sensors And Context</string>
+    <string name="fft_window_size">FFT Window Size</string>
+    <string name="sampling_rate">Sampling Rate</string>
 </resources>

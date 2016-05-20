@@ -13,7 +13,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sampling Rate"
+        android:text="@string/sampling_rate"
+        android:id="@+id/sampling_rate"
         />
 
     <SeekBar
@@ -32,7 +33,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="FFT Window Size"
+        android:text="@string/fft_window_size"
+        android:id="@+id/fft_window_size"
         />
 
     <SeekBar
