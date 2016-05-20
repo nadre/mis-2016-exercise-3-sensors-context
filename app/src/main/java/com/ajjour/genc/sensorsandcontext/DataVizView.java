@@ -9,8 +9,6 @@ import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 
-import java.util.Arrays;
-
 /**
  * Created by neffle on 15.05.16.
  *
@@ -27,8 +25,6 @@ public class DataVizView extends View {
 
     Path[] paths;
     Paint[] paints;
-
-    boolean increasing = true;
 
     //should be an power of 2
     int initWindowSize = 1024;
@@ -94,7 +90,6 @@ public class DataVizView extends View {
         for (int i = 0; i < paths.length; i++){
             canvas.drawPath(paths[i], paints[i]);
         }
-
     }
 
     public void clearCanvas() {
@@ -105,6 +100,8 @@ public class DataVizView extends View {
     }
 
     public double updateViewAndReturnMagnitude(float newValues[]) {
+
+        if (canvas == null){ return 0.0; }
 
         double newVal;
         double oldVal;

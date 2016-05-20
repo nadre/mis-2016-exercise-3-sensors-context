@@ -9,13 +9,14 @@ import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 
-import java.util.Arrays;
+import org.apache.commons.collections4.queue.CircularFifoQueue;
 
 /**
  * Created by neffle on 15.05.16.
  *
  * Inspiration:
  * https://examples.javacodegeeks.com/android/core/graphics/canvas-graphics/android-canvas-example/
+ * http://stackoverflow.com/questions/5498865/size-limited-queue-that-holds-last-n-elements-in-java
  */
 public class DataFFTView extends View {
 
@@ -28,15 +29,14 @@ public class DataFFTView extends View {
     Paint paint;
     Path path;
 
-    boolean increasing = true;
-
     //should be an power of 2
-    int initWindowSize = 1024;
-    int maxWindowSize = 2048;
+    int windowSize = 512;
 
-    double[] fft_values = new double[maxWindowSize];
+    FFT fft = new FFT(windowSize);
 
-    int index = 0;
+    CircularFifoQueue<Double> magnitudes = new CircularFifoQueue<Double>(windowSize);
+
+    int counter = 0;
 
     public DataFFTView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -68,30 +68,27 @@ public class DataFFTView extends View {
     }
 
     public void addNewMagValue(double magVal) {
-        if (index == initWindowSize - 1){
-            increasing = false;
-        }
-        if (increasing) {
-            fft_values[index] = magVal;
-            index++;
-        }
-        else {
-            for (int i = initWindowSize - 1; i == 0; i--){
-                fft_values[i-1] = fft_values[i];
-            }
-            fft_values[initWindowSize - 1] = magVal;
+
+        magnitudes.add(magVal);
+
+        // draw not every at every step
+        counter++;
+        if (counter != 10) return;
+        counter = 0;
+
+        double[] fft_out_x = new double[windowSize];
+        double[] fft_out_y = new double[windowSize];
+
+        for (int i = 0; i < magnitudes.size(); i++) {
+            fft_out_x[i] = magnitudes.get(i);
         }
 
-        double[] fft_out_x = Arrays.copyOf(fft_values, fft_values.length);
-        double[] fft_out_y = new double[fft_values.length];
-
-        FFT fft = new FFT(initWindowSize);
         fft.fft(fft_out_x, fft_out_y);
 
         path.reset();
         for(int i = 0; i < fft_out_x.length; i++){
             double abs = fft.abs(fft_out_x[i], fft_out_y[i]);
-            if(mCanvas != null && abs < mCanvas.getDensity())
+//            if(mCanvas != null && abs < mCanvas.getDensity())
                 path.lineTo(i, (float) abs);
         }
         invalidate();
@@ -99,6 +96,7 @@ public class DataFFTView extends View {
 
     public void changeWindowSize(int newWindowSize) {
         if(newWindowSize < 2) return;
-        initWindowSize = (int) Math.pow(2, newWindowSize);
+        windowSize = (int) Math.pow(2, newWindowSize);
+        fft = new FFT(newWindowSize);
     }
 }
