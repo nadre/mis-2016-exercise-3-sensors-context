@@ -105,20 +105,20 @@ public class DataVizView extends View {
 
         double newVal;
         double newMag = 0;
-        double oldMag = this.values[3];
         if (canvas != null &&  t > canvas.getWidth()){
-            t= t-1;
+            t = t-1;
             for(int i = 0 ; i < 4 ; i++)
             {
-                paths[i].offset((float) -1 ,0);
+//                paths[i].offset(-1 ,0);
+                paths[i].reset();
+                t = 0;
             }
         }
         for (int i = 0; i < 3; i++){
             newVal = newValues[i];
             newMag += Math.pow(newVal, 2);
             newVal = newVal  + dy;
-            if(canvas != null && newVal > canvas.getHeight())
-                newVal = canvas.getHeight();
+            if(canvas != null && newVal > canvas.getHeight()) newVal = canvas.getHeight();
             paths[i].lineTo(t, (float) newVal);
             if(newVal < canvas.getHeight())
             this.values[i] = newVal ;
@@ -126,8 +126,7 @@ public class DataVizView extends View {
 
         newMag = (float) Math.sqrt(newMag);
         float newMagPoint = (float) newMag*10 + (float) dy;
-        if(newMagPoint > canvas.getHeight())
-            newMagPoint = canvas.getHeight();
+        if(newMagPoint > canvas.getHeight()) newMagPoint = canvas.getHeight();
         paths[3].lineTo(t, newMagPoint );
 
         this.values[3] = newMag;

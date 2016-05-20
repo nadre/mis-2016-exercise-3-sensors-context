@@ -13,14 +13,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="83896fdf-1234-43a4-baa4-ed62855f2ae6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/ajjour/genc/sensorsandcontext/ActivityRecognizer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/ajjour/genc/sensorsandcontext/ActivityTypes.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/ajjour/genc/sensorsandcontext/DataFFTView.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/ajjour/genc/sensorsandcontext/DataFFTView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/ajjour/genc/sensorsandcontext/DataVizActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/ajjour/genc/sensorsandcontext/DataVizActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/ajjour/genc/sensorsandcontext/DataVizView.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/ajjour/genc/sensorsandcontext/DataVizView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_data_viz.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_data_viz.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
     </list>
     <ignored path="mis-2016-exercise-3-sensors-context.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -154,11 +149,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataVizView.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DataVizView.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ajjour/genc/sensorsandcontext/DataVizView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.0440098">
-              <caret line="129" column="45" selection-start-line="129" selection-start-column="45" selection-end-line="129" selection-end-column="45" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="113" column="22" selection-start-line="113" selection-start-column="22" selection-end-line="113" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -182,11 +177,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataFFTView.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DataFFTView.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ajjour/genc/sensorsandcontext/DataFFTView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="73" column="44" selection-start-line="73" selection-start-column="44" selection-end-line="73" selection-end-column="44" />
+            <state vertical-scroll-proportion="1.3740832">
+              <caret line="92" column="27" selection-start-line="92" selection-start-column="27" selection-end-line="92" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1304#1312#0" expanded="true" />
@@ -1804,12 +1799,12 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/ajjour/genc/sensorsandcontext/ActivityRecognizer.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_data_viz.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/ajjour/genc/sensorsandcontext/DataVizActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ajjour/genc/sensorsandcontext/DataFFTView.java" />
         <option value="$PROJECT_DIR$/captures/com.ajjour.genc.sensorsandcontext_2016.05.20_15.50.txt" />
         <option value="$PROJECT_DIR$/captures/com.ajjour.genc.sensorsandcontext_2016.05.20_15.51.txt" />
         <option value="$PROJECT_DIR$/captures/com.ajjour.genc.sensorsandcontext_2016.05.20_15.51-1.txt" />
         <option value="$PROJECT_DIR$/captures/com.ajjour.genc.sensorsandcontext_2016.05.20_15.51-2.txt" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/ajjour/genc/sensorsandcontext/DataVizView.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/ajjour/genc/sensorsandcontext/DataFFTView.java" />
       </list>
     </option>
   </component>
@@ -2841,13 +2836,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ajjour/genc/sensorsandcontext/DataFFTView.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ajjour/genc/sensorsandcontext/DataVizView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="73" column="44" selection-start-line="73" selection-start-column="44" selection-end-line="73" selection-end-column="44" />
+          <caret line="113" column="22" selection-start-line="113" selection-start-column="22" selection-end-line="113" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1304#1312#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2863,12 +2857,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ajjour/genc/sensorsandcontext/DataVizView.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ajjour/genc/sensorsandcontext/DataFFTView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0440098">
-          <caret line="129" column="45" selection-start-line="129" selection-start-column="45" selection-end-line="129" selection-end-column="45" />
+        <state vertical-scroll-proportion="1.3740832">
+          <caret line="92" column="27" selection-start-line="92" selection-start-column="27" selection-end-line="92" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1304#1312#0" expanded="true" />
           </folding>
         </state>
       </provider>

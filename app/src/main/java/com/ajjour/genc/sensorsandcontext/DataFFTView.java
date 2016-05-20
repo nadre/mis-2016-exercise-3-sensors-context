@@ -55,8 +55,8 @@ public class DataFFTView extends View {
         this.attrs = attrs;
 
         paint = new Paint();
-        paint.setColor(Color.LTGRAY);
-        paint.setStrokeWidth(8f);
+        paint.setColor(Color.MAGENTA);
+        paint.setStrokeWidth(10f);
 
         points = new Point[windowSize];
     }
@@ -86,9 +86,11 @@ public class DataFFTView extends View {
         if(magnitudes.size() < magnitudes.maxSize()) return;
 
         // do not draw at every step
-        counter++;
-        if (counter != 10) return;
-        counter = 0;
+//        counter++;
+//        if (counter != 10) return;
+//        counter = 0;
+
+        if (mCanvas == null) return;
 
         double[] fft_out_x = new double[windowSize];
         double[] fft_out_y = new double[windowSize];
