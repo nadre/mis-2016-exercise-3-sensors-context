@@ -26,14 +26,6 @@ public class DataVizView extends View {
     Path[] paths;
     Paint[] paints;
 
-    //should be an power of 2
-    int initWindowSize = 1024;
-    int maxWindowSize = 2048;
-
-    double[] fft_values = new double[maxWindowSize];
-
-    int index = 0;
-
     double[] values;
     int t;
     double dx;
@@ -87,15 +79,11 @@ public class DataVizView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for (int i = 0; i < paths.length; i++){
-            canvas.drawPath(paths[i], paints[i]);
-        }
+        for (int i = 0; i < paths.length; i++) canvas.drawPath(paths[i], paints[i]);
     }
 
     public void clearCanvas() {
-        for (int i = 0; i < paths.length; i++){
-            paths[i].reset();
-        }
+        for (Path path : paths) path.reset();
         invalidate();
     }
 
@@ -105,7 +93,7 @@ public class DataVizView extends View {
 
         double newVal;
         double newMag = 0;
-        if (canvas != null &&  t > canvas.getWidth()){
+        if (t > canvas.getWidth()){
             t = t-1;
             for(int i = 0 ; i < 4 ; i++)
             {

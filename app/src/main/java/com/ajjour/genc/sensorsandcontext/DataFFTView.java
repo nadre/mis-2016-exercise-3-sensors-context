@@ -1,16 +1,11 @@
 package com.ajjour.genc.sensorsandcontext;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.support.v4.app.NotificationCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -44,9 +39,8 @@ public class DataFFTView extends View {
 
     FFT fft = new FFT(windowSize);
 
-    CircularFifoQueue<Double> magnitudes = new CircularFifoQueue<Double>(windowSize);
+    CircularFifoQueue<Double> magnitudes = new CircularFifoQueue<>(windowSize);
 
-    int counter = 0;
 
     public DataFFTView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -127,7 +121,7 @@ public class DataFFTView extends View {
         if(newWindowSize < 2) return;
         windowSize = (int) Math.pow(2, newWindowSize);
         Log.d("newWindowSize", ""+newWindowSize);
-        magnitudes = new CircularFifoQueue<Double>(windowSize);
+        magnitudes = new CircularFifoQueue<>(windowSize);
         points = new Point[windowSize];
         fft = new FFT(windowSize);
     }
