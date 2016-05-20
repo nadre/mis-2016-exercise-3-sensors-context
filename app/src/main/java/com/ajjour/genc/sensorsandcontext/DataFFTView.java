@@ -91,7 +91,8 @@ public class DataFFTView extends View {
         path.reset();
         for(int i = 0; i < fft_out_x.length; i++){
             double abs = fft.abs(fft_out_x[i], fft_out_y[i]);
-            path.lineTo(i, (float) abs);
+            if(mCanvas != null && abs < mCanvas.getDensity())
+                path.lineTo(i, (float) abs);
         }
         invalidate();
     }

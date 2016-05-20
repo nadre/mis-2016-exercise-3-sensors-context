@@ -39,7 +39,7 @@ public class DataVizView extends View {
     int index = 0;
 
     double[] values;
-    double T;
+    int t;
     double dx;
     double dy;
     long startTimeMillis;
@@ -86,7 +86,6 @@ public class DataVizView extends View {
 
         dx = this.getWidth() / 2;
         dy = this.getHeight() / 2;
-        T = 0;
     }
 
     @Override
@@ -109,39 +108,37 @@ public class DataVizView extends View {
 
         double newVal;
         double oldVal;
-
-        long t = (System.currentTimeMillis() - startTimeMillis) / 10;
-        double dt = T-t;
-
         double newMag = 0;
         double oldMag = this.values[3];
-
+        if (canvas != null &&  t > canvas.getWidth()){
+            t= t-1;
+            for(int i = 0 ; i < 4 ; i++)
+            {
+                paths[i].offset((float) -1 ,0);
+            }
+        }
         for (int i = 0; i < 3; i++){
             newVal = newValues[i];
             newMag += Math.pow(newVal, 2);
-            newVal = newVal * 10 + dy;
+            newVal = newVal  + dy;
 //            oldVal = this.values[i];
+            if(canvas != null && newVal > canvas.getHeight())
+                newVal = canvas.getHeight();
             paths[i].lineTo(t, (float) newVal);
-//            if (t > 20){
-//                paths[i].offset( (float) dt, 0);
-//            }
-            this.values[i] = newVal;
+            if(newVal < canvas.getHeight())
+            this.values[i] = newVal ;
         }
 
         newMag = (float) Math.sqrt(newMag);
-
+        float newMagPoint = (float) newMag*10 + (float) dy;
 //        paths[3].quadTo(T, oldMag, (t + T) / 2, (newMag + oldMag) / 2);
-        paths[3].lineTo(t, (float) newMag*10 + (float) dy );
-
-//        if (t > 20){
-//            paths[3].offset((float) dt ,0);
-//            startTimeMillis += dt;
-//        }
+        if(newMagPoint > canvas.getHeight())
+            newMagPoint = canvas.getHeight();
+        paths[3].lineTo(t, newMagPoint );
 
         this.values[3] = newMag;
-        T = t;
         invalidate();
-
+        t = t+1;
         return newMag;
     }
 
